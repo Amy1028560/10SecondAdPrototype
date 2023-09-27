@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        // Game over currently doesn't work
-        SceneManager.LoadScene("GameOverScene"); 
+       
     }
 }

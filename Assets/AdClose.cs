@@ -9,7 +9,7 @@ public class AdClose : MonoBehaviour
     void Start()
     {
         closeButton.GetComponent<Button>().onClick.AddListener(CloseAd);
-        adContent.GetComponent<Button>().onClick.AddListener(GameOver);
+      //  adContent.GetComponent<Button>().onClick.AddListener(GameOver);
     }
 
     void CloseAd()
@@ -19,7 +19,7 @@ public class AdClose : MonoBehaviour
 
     void GameOver()
     {
-        GameManager.Instance.GameOver();
+     
     }
 }
 
