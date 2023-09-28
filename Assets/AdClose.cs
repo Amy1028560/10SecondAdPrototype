@@ -19,6 +19,8 @@ public class AdClose : MonoBehaviour
 
     private void Update()
     {
+        OnMouseOver(); 
+        
         if (playerLives == 0)
         {
             //add scene reload code here
