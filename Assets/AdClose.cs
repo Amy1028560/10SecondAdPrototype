@@ -37,7 +37,7 @@ public class AdClose : MonoBehaviour
     void LoseLives()
     {
         playerLives--;
-        Debug.Log("wow cam, you fuckin' did it, dummy");
+        //Debug.Log("Life lost");
     }
 
     void GameOver()
