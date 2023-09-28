@@ -14,13 +14,11 @@ public class AdClose : MonoBehaviour
         playerLives = 3; 
         
         closeButton.GetComponent<Button>().onClick.AddListener(CloseAd);
-        //adContent.GetComponent<Button>().onClick.AddListener(GameOver);
+        adContent.GetComponent<Button>().onClick.AddListener(LoseLives);
     }
 
     private void Update()
     {
-        OnMouseOver(); 
-        
         if (playerLives == 0)
         {
             //add scene reload code here
@@ -32,13 +30,10 @@ public class AdClose : MonoBehaviour
         adContent.SetActive(false);
     }
 
-    public void OnMouseOver()
+    void LoseLives()
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            playerLives--;
-            Debug.Log("wow cam, you fuckin' did it, dummy"); 
-        }
+        playerLives--;
+        Debug.Log("wow cam, you fuckin' did it, dummy");
     }
 
     void GameOver()
