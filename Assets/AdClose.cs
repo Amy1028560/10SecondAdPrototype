@@ -2,11 +2,13 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class AdClose : MonoBehaviour
 {
     public GameObject closeButton;
     public GameObject adContent;
+    public GameObject entireAd; 
 
     public int playerLives;
     public GameObject livesText;
@@ -25,13 +27,13 @@ public class AdClose : MonoBehaviour
 
         if (playerLives == 0)
         {
-            //add scene reload code here
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 
     void CloseAd()
     {
-        adContent.SetActive(false);
+        entireAd.SetActive(false);
     }
 
     void LoseLives()
