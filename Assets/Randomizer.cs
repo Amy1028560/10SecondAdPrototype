@@ -17,6 +17,8 @@ public class Randomizer : MonoBehaviour
     public float minSpawnRate = 1f;
     public float maxSpawnRate = 3f;
 
+    public Transform parentCavnas; 
+
     private void OnEnable()
     {
         Invoke(nameof(Spawn), Random.Range(minSpawnRate, maxSpawnRate));
@@ -35,7 +37,7 @@ public class Randomizer : MonoBehaviour
         {
             if (spawnChance < obj.spawnChance)
             {
-                GameObject obstacle = Instantiate(obj.prefab);
+                GameObject obstacle = Instantiate(obj.prefab, parentCavnas);
                 obstacle.transform.position += transform.position;
                 break;
             }
