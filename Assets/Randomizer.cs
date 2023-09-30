@@ -4,48 +4,73 @@ using UnityEngine;
 
 public class Randomizer : MonoBehaviour
 {
-    [System.Serializable]
-    public struct SpawnableObject
+    public GameObject[] prefabsToSpawn;
+    public float spawnInterval = 2.0f;
+    public float spawnRadius = 5.0f; // Adjust this radius as needed.
+    public float gameDuration = 10.0f; // Set the game duration in seconds.
+
+    private Canvas canvas; // Reference to the Canvas, if needed.
+    private bool canInteract = true;
+
+    private void Start()
     {
-        public GameObject prefab;
-        [Range(0f, 1f)]
-        public float spawnChance;
-    }
+        // Find the Canvas in the scene.
+        canvas = FindObjectOfType<Canvas>();
 
-    public SpawnableObject[] objects;
-
-    public float minSpawnRate = 1f;
-    public float maxSpawnRate = 3f;
-
-    public Transform parentCavnas; 
-
-    private void OnEnable()
-    {
-        Invoke(nameof(Spawn), Random.Range(minSpawnRate, maxSpawnRate));
-    }
-
-    private void OnDisable()
-    {
-        CancelInvoke();
-    }
-
-    private void Spawn()
-    {
-        float spawnChance = Random.value;
-
-        foreach (var obj in objects)
+        if (canvas == null)
         {
-            if (spawnChance < obj.spawnChance)
-            {
-                GameObject obstacle = Instantiate(obj.prefab, parentCavnas);
-                obstacle.transform.position += transform.position;
-                break;
-            }
-
-            spawnChance -= obj.spawnChance;
+            Debug.LogError("No Canvas found in the scene. Make sure to create a Canvas GameObject.");
+            return;
         }
 
-        Invoke(nameof(Spawn), Random.Range(minSpawnRate, maxSpawnRate));
+        // Start spawning immediately and then at intervals.
+        StartCoroutine(SpawnPrefabs());
+
+        // Start a timer to end the game after the specified duration.
+        StartCoroutine(EndGameAfterDuration());
     }
 
+    private IEnumerator SpawnPrefabs()
+    {
+        float timer = 0.0f;
+
+        while (timer < gameDuration)
+        {
+            if (canInteract)
+            {
+                // Randomly select a prefab from the array.
+                GameObject randomPrefab = prefabsToSpawn[Random.Range(0, prefabsToSpawn.Length)];
+
+                // Randomize the spawn position within a specified radius.
+                Vector3 spawnPosition = transform.position + new Vector3(Random.Range(-spawnRadius, spawnRadius), Random.Range(-spawnRadius, spawnRadius), 0);
+
+                // Instantiate the selected prefab at the randomized position.
+                GameObject spawnedPrefab = Instantiate(randomPrefab, spawnPosition, Quaternion.identity);
+
+                // Make the spawned prefab a child of the Canvas.
+                if (canvas != null)
+                {
+                    spawnedPrefab.transform.SetParent(canvas.transform, false);
+                }
+            }
+
+            // Wait for the specified spawn interval before spawning the next prefab.
+            yield return new WaitForSeconds(spawnInterval);
+
+            timer += spawnInterval;
+        }
+    }
+
+    private IEnumerator EndGameAfterDuration()
+    {
+        yield return new WaitForSeconds(gameDuration);
+
+        // Disable player interaction after the game ends.
+        canInteract = false;
+
+        // Add your game-ending logic here, such as showing a game over screen or exiting the application.
+        Debug.Log("Game Over");
+        // Example: To exit the application after the game ends.
+        // Application.Quit();
+    }
 }
