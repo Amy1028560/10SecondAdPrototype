@@ -1,6 +1,8 @@
+using TMPro; 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; 
 
 public class Randomizer : MonoBehaviour
 {
@@ -9,8 +11,12 @@ public class Randomizer : MonoBehaviour
     public float spawnRadius = 5.0f; // Adjust this radius as needed.
     public float gameDuration = 10.0f; // Set the game duration in seconds.
 
+    public float timer; 
+
     private Canvas canvas; // Reference to the Canvas, if needed.
     private bool canInteract = true;
+
+    public GameObject timerDisplay; 
 
     private void Start()
     {
@@ -28,12 +34,17 @@ public class Randomizer : MonoBehaviour
 
         // Start a timer to end the game after the specified duration.
         StartCoroutine(EndGameAfterDuration());
+
+        timer = 0.0f; 
+    }
+
+    private void Update()
+    {
+        timerDisplay.GetComponent<TextMeshProUGUI>().text = "Time: " + (int)timer;
     }
 
     private IEnumerator SpawnPrefabs()
     {
-        float timer = 0.0f;
-
         while (timer < gameDuration)
         {
             if (canInteract)

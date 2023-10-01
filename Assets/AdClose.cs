@@ -10,25 +10,17 @@ public class AdClose : MonoBehaviour
     public GameObject adContent;
     public GameObject entireAd; 
 
-    public int playerLives;
-    public GameObject livesText;
+    public GameObject livesLink; 
 
     void Start()
     {
-        playerLives = 3;
-        
         closeButton.GetComponent<Button>().onClick.AddListener(CloseAd);
         adContent.GetComponent<Button>().onClick.AddListener(LoseLives);
     }
 
     private void Update()
     {
-        livesText.GetComponent<TextMeshProUGUI>().text = "Lives: " + playerLives.ToString();
-
-        if (playerLives == 0)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+        
     }
 
     void CloseAd()
@@ -38,8 +30,8 @@ public class AdClose : MonoBehaviour
 
     void LoseLives()
     {
-        playerLives--;
-        //Debug.Log("Life lost");
+        livesLink.GetComponent<LivesSystem>().playerLives--;
+        Debug.Log("Life lost lol");
     }
 
     void GameOver()

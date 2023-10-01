@@ -3,7 +3,11 @@ guid: 32cce27a6415d874b8f0d58bbf3eadba
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - closeButton: {instanceID: 0}
+  - adContent: {instanceID: 0}
+  - entireAd: {instanceID: 0}
+  - livesLink: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
